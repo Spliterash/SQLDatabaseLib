@@ -44,6 +44,16 @@ public class SimpleSQLiteDatabaseTest {
             assertEquals(params.get(i), row.getString(i));
         }
 
+        DtoObject dtoObject = result
+                .first()
+                .map(r -> r.fill(DtoObject.class))
+                .orElseThrow(AssertionError::new);
+
+        assertEquals(dtoObject.getId(), params.get(0));
+        assertEquals(dtoObject.getColumn1(), params.get(1));
+        assertEquals(dtoObject.getColumn2(), params.get(2));
+        assertEquals(dtoObject.getColumn3(), params.get(3));
+
         database.destroy();
     }
 

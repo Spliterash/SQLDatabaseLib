@@ -1,12 +1,16 @@
 package ru.spliterash.utils.database.base.objects;
 
 import lombok.Builder;
+import lombok.Getter;
 import lombok.Singular;
+import ru.spliterash.utils.database.base.utils.FillUtils;
 
+import java.lang.reflect.InvocationTargetException;
 import java.util.Map;
 
 @Builder
 public class ResultSetRow {
+    @Getter
     @Singular("addResultRow")
     private final Map<String, Object> result;
 
@@ -47,5 +51,14 @@ public class ResultSetRow {
     @Override
     public String toString() {
         return "[" + result.toString() + "]";
+    }
+
+    public <T> T fill(Class<T> clazz) {
+        try {
+            //noinspection unchecked
+            return (T) FillUtils.create(clazz, this);
+        } catch (IllegalAccessException | InvocationTargetException | NoSuchMethodException | InstantiationException e) {
+            throw new RuntimeException(e);
+        }
     }
 }

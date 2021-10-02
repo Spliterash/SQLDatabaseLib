@@ -1,16 +1,16 @@
 plugins {
     id("java")
     id("maven-publish")
-    id("io.freefair.lombok") version "5.3.0"
+    id("io.freefair.lombok") version "6.2.0"
 }
 
 allprojects {
     apply(plugin = "java")
     apply(plugin = "io.freefair.lombok")
 
-    tasks.generateLombokConfig {
+/*    tasks.generateLombokConfig {
         enabled = false
-    }
+    }*/
 
 
     group = "ru.spliterash.utils"
