@@ -1,0 +1,10 @@
+rootProject.name = 'sql-database'
+
+include(
+        "jdbc",
+        "base",
+        "jdbc:types:sqlite:simple",
+        "jdbc:types:sqlite:hikaricp",
+        "jdbc:types:mysql:simple",
+        "jdbc:types:mysql:hikaricp"
+)

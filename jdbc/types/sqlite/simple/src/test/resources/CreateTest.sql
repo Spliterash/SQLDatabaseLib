@@ -1,0 +1,7 @@
+CREATE TABLE IF NOT EXISTS test_table
+(
+    id      VARCHAR NOT NULL,
+    column1 VARCHAR NOT NULL,
+    column2 VARCHAR NOT NULL,
+    column3 VARCHAR NOT NULL
+)
