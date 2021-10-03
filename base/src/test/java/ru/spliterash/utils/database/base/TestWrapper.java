@@ -12,6 +12,6 @@ public class TestWrapper {
     private double flt;
     private boolean bln;
 
-    @Setter(onMethod = @__(@SQLProperty("custom_name")))
+    @Setter(onMethod_ = @SQLProperty("custom_name"))
     private String randomProperty;
 }

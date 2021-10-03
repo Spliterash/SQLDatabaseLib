@@ -20,8 +20,29 @@
     paramMap.put("userId", userId);
     paramMap.put("age", age);
     
-    database.query("SELECT * FROM table where userId=:userId and age=:age")
+    database.query("SELECT * FROM table where id=:userId and age=:age")
     ```
+* Запросы с named параметрами из объекта
+
+    ```java
+    @Getter
+    @Setter
+    public class UserDto {
+        private String id;
+        private String name;
+        private int age;
+    }
+    ```
+  
+  ```java
+  UserDto dto = new UserDto();
+  
+  dto.setName("userName");
+  dto.setAge(16);
+  
+  database.queryDto("SELECT * FROM table where id=:id and age=:age", dto)
+  ```
+
 * Сессия для запросов, позволяет совершить несколько запросов, используя 1 Connection.
 
   Очень сильно оптимизирует процесс, когда нужно сделать несколько запросов, например (я знаю что это можно сделать 1 запросом, тут как пример)

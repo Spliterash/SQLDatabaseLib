@@ -1,26 +1,19 @@
 package ru.spliterash.utils.database.base.utils;
 
 import lombok.experimental.UtilityClass;
-import ru.spliterash.utils.database.base.objects.ResultSetRow;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
-import java.util.Arrays;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 import java.util.function.Supplier;
 import java.util.logging.Logger;
 
 @UtilityClass
 public class FillUtils {
 
-    @SuppressWarnings("unchecked")
-    private static <T> Class<T> wrap(Class<T> c) {
-        return c.isPrimitive() ? (Class<T>) PRIMITIVES_TO_WRAPPERS.get(c) : c;
-    }
-
     private static final Map<Class<?>, Class<?>> PRIMITIVES_TO_WRAPPERS;
+    private final static List<String> BLACK_LIST_METHODS = Collections.singletonList("getClass");
+    private final static List<String> GETTERS = Arrays.asList("get", "is");
 
     static {
         PRIMITIVES_TO_WRAPPERS = new HashMap<>();
@@ -35,12 +28,17 @@ public class FillUtils {
         PRIMITIVES_TO_WRAPPERS.put(void.class, Void.class);
     }
 
-    public static Object create(final Class<?> clazz, ResultSetRow row)
+    @SuppressWarnings("unchecked")
+    private static <T> Class<T> wrap(Class<T> c) {
+        return c.isPrimitive() ? (Class<T>) PRIMITIVES_TO_WRAPPERS.get(c) : c;
+    }
+
+    public static <T> T create(final Class<T> clazz, Map<String, Object> map)
             throws IllegalAccessException, InvocationTargetException, NoSuchMethodException, InstantiationException {
 
-        Object instance = clazz.getConstructor().newInstance();
+        T instance = clazz.getConstructor().newInstance();
 
-        for (Map.Entry<String, Object> entry : row.getResult().entrySet()) {
+        for (Map.Entry<String, Object> entry : map.entrySet()) {
             String name = entry.getKey();
             Object value = entry.getValue();
 
@@ -48,6 +46,39 @@ public class FillUtils {
         }
 
         return instance;
+    }
+
+    public static Map<String, Object> toMap(Object obj) throws InvocationTargetException, IllegalAccessException {
+
+
+        Class<?> clazz = obj.getClass();
+        Map<String, Object> map = new HashMap<>();
+
+        for (Method method : clazz.getMethods()) {
+            if (BLACK_LIST_METHODS.contains(method.getName()))
+                continue;
+            if (method.getParameterCount() > 0)
+                continue;
+
+            String varName = null;
+            if (method.isAnnotationPresent(SQLProperty.class)) {
+                varName = method.getAnnotation(SQLProperty.class).value();
+            } else {
+                for (String getter : GETTERS) {
+                    if (method.getName().startsWith(getter)) {
+                        varName = method.getName().substring(getter.length(), getter.length() + 1).toLowerCase() +
+                                method.getName().substring(getter.length() + 1);
+                        break;
+                    }
+                }
+            }
+
+            if (varName == null)
+                continue;
+            map.put(varName, method.invoke(obj));
+        }
+
+        return map;
     }
 
     private static void trySetProperty(Object bean, String name, Object value) throws InvocationTargetException, IllegalAccessException {
@@ -59,7 +90,11 @@ public class FillUtils {
         Class<?> clazz = bean.getClass();
 
         Method method = Arrays.stream(clazz.getMethods())
-                .filter(m -> m.getName().equals(setterName) || (m.isAnnotationPresent(SQLProperty.class) && m.getAnnotation(SQLProperty.class).value().equals(name)))
+                .filter(m -> m.getName().equals(setterName) || (
+                        m.isAnnotationPresent(SQLProperty.class) &&
+                                m.getAnnotation(SQLProperty.class).value().equals(name) &&
+                                m.getParameterCount() == 1
+                ))
                 .findFirst()
                 .orElse(null);
         if (method == null) {

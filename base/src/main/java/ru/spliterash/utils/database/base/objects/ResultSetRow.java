@@ -55,8 +55,7 @@ public class ResultSetRow {
 
     public <T> T fill(Class<T> clazz) {
         try {
-            //noinspection unchecked
-            return (T) FillUtils.create(clazz, this);
+            return FillUtils.create(clazz, this.result);
         } catch (IllegalAccessException | InvocationTargetException | NoSuchMethodException | InstantiationException e) {
             throw new RuntimeException(e);
         }
