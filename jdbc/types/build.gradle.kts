@@ -22,8 +22,5 @@ subprojects {
 
         lastProject = lastProject.parent!!
     }
-
-    publishing.publications.withType<MavenPublication> {
-        artifactId = artifactName
-    }
+    ext["mavenArtifactId"] = artifactName
 }

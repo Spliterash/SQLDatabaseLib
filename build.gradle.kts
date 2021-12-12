@@ -81,20 +81,25 @@ val projectRepoFolder: String = rootProject.projectDir.absolutePath + "\\repo"
 
 
 subprojects {
-    apply(uri("https://gradle.spliterash.ru/group-id-fix.gradle"))
     apply(plugin = "maven-publish")
+    apply(uri("https://gradle.spliterash.ru/group-id-fix.gradle"))
     apply(uri("https://gradle.spliterash.ru/maven-publish.gradle"))
 
     java {
         withSourcesJar()
     }
+
+    val mavenGroupId = rootProject.group.toString() + "." + rootProject.name;
+    ext["mavenGroupId"] = mavenGroupId
+
+
+
     afterEvaluate {
         if (tasks.jar.get().enabled) {
             publishing {
                 publications {
                     create<MavenPublication>("maven") {
                         pom {
-                            groupId = rootProject.group.toString() + "." + rootProject.name
                             description.set("Simple library to work better with java JDBC database")
                             url.set("https://github.com/Spliterash/SQLDatabaseLib.git")
                         }
