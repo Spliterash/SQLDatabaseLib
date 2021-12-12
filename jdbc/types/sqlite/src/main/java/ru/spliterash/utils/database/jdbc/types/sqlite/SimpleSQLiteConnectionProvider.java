@@ -1,4 +1,4 @@
-package ru.spliterash.utils.database.jdbc.types.sqlite.simple;
+package ru.spliterash.utils.database.jdbc.types.sqlite;
 
 import lombok.RequiredArgsConstructor;
 import ru.spliterash.utils.database.base.exception.DatabaseException;

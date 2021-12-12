@@ -2,6 +2,7 @@ package ru.spliterash.utils.database.jdbc.types.sqlite.simple;
 
 import ru.spliterash.utils.database.base.definition.DatabaseSession;
 import ru.spliterash.utils.database.jdbc.types.sqlite.SQLiteDatabase;
+import ru.spliterash.utils.database.jdbc.types.sqlite.SimpleSQLiteConnectionProvider;
 
 import java.io.File;
 
