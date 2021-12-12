@@ -6,8 +6,9 @@ import ru.spliterash.utils.database.base.objects.QueryResult;
 import ru.spliterash.utils.database.base.objects.ResultSetRow;
 
 import java.sql.*;
-import java.util.*;
+import java.time.Instant;
 import java.util.Date;
+import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -43,6 +44,8 @@ public class JDBCUtils {
         int index = i + 1;
         if (obj instanceof Date)
             statement.setLong(index, ((Date) obj).getTime() / 1000L);
+        else if (obj instanceof Instant)
+            statement.setLong(index, ((Instant) obj).getEpochSecond());
         else
             statement.setObject(index, obj);
     }

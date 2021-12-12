@@ -4,6 +4,7 @@ import lombok.experimental.UtilityClass;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.time.Instant;
 import java.util.*;
 import java.util.function.Supplier;
 import java.util.logging.Logger;
@@ -124,6 +125,8 @@ public class FillUtils {
             method.invoke(bean, transform(parameterType, value, () -> Boolean.parseBoolean(value.toString())));
         else if (parameterType.equals(Date.class))
             method.invoke(bean, transform(parameterType, value, () -> new Date(Long.parseLong(value.toString()))));
+        else if (parameterType.equals(Instant.class))
+            method.invoke(bean, transform(parameterType, value, () -> Instant.ofEpochSecond(Long.parseLong(value.toString()))));
         else
             method.invoke(bean, transform(parameterType, value, () -> {
                 Logger.getAnonymousLogger().warning("Unknown method " + method.getName() + "  parameter type: " + parameterType.getName());

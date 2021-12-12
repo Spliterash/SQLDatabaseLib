@@ -6,6 +6,7 @@ import lombok.Singular;
 import ru.spliterash.utils.database.base.utils.FillUtils;
 
 import java.lang.reflect.InvocationTargetException;
+import java.time.Instant;
 import java.util.Map;
 
 @Builder
@@ -42,6 +43,37 @@ public class ResultSetRow {
             }
         }
         return null;
+    }
+
+    public Instant getInstant(String key) {
+        Object obj = getObject(key);
+
+        return parseInstant(obj);
+    }
+
+    public Instant getInstant(int i) {
+        Object obj = getObject(i);
+
+        return parseInstant(obj);
+    }
+
+    private Instant parseInstant(Object obj) {
+        if (obj == null)
+            return null;
+
+        if (obj instanceof Instant)
+            return (Instant) obj;
+        else if (obj instanceof Long)
+            return Instant.ofEpochSecond((Long) obj);
+        else if (obj instanceof String)
+            try {
+                long l = Long.parseLong(obj.toString());
+                return Instant.ofEpochSecond(l);
+            } catch (NumberFormatException ex) {
+                return Instant.MIN;
+            }
+        else
+            return Instant.MIN;
     }
 
     public long getLong(int i) {
