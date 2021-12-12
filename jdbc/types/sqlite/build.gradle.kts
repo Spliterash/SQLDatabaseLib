@@ -4,7 +4,7 @@ val current = project
 
 subprojects {
     dependencies {
-        runtimeOnly(JDBC_SQLITE)
+//        runtimeOnly(JDBC_SQLITE)
         implementation(current)
     }
 }
