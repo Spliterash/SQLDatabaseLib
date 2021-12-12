@@ -3,6 +3,7 @@ package ru.spliterash.utils.database.jdbc.types.sqlite.inMemory;
 import ru.spliterash.utils.database.base.definition.DatabaseSession;
 import ru.spliterash.utils.database.base.exception.DatabaseException;
 import ru.spliterash.utils.database.base.objects.AbstractDatabase;
+import ru.spliterash.utils.database.jdbc.types.sqlite.AbstractSQLiteDatabase;
 import ru.spliterash.utils.database.jdbc.types.sqlite.SQLiteDatabase;
 import ru.spliterash.utils.database.jdbc.types.sqlite.SimpleSQLiteConnectionProvider;
 
@@ -15,7 +16,7 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
-public class InMemorySQLiteDatabase extends AbstractDatabase {
+public class InMemorySQLiteDatabase extends AbstractDatabase implements SQLiteDatabase {
     private final SimpleSQLiteConnectionProvider connectionProvider;
     private final Executor asyncExecutor;
     private final Lock lock;
@@ -65,7 +66,7 @@ public class InMemorySQLiteDatabase extends AbstractDatabase {
 
     @Override
     public String getType() {
-        return SQLiteDatabase.TYPE;
+        return AbstractSQLiteDatabase.TYPE;
     }
 
     public void save() {

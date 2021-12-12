@@ -1,11 +1,11 @@
 package ru.spliterash.utils.database.jdbc.types.sqlite.hikaricp;
 
 import ru.spliterash.utils.database.base.definition.DatabaseSession;
-import ru.spliterash.utils.database.jdbc.types.sqlite.SQLiteDatabase;
+import ru.spliterash.utils.database.jdbc.types.sqlite.AbstractSQLiteDatabase;
 
 import java.io.File;
 
-public class HikariCPSQLiteDatabase extends SQLiteDatabase<HikariCPSQLiteConnectionProvider> {
+public class HikariCPSQLiteDatabase extends AbstractSQLiteDatabase<HikariCPSQLiteConnectionProvider> {
     public HikariCPSQLiteDatabase(HikariCPSQLiteConnectionProvider provider) {
         super(provider);
     }

@@ -1,16 +1,9 @@
 package ru.spliterash.utils.database.jdbc.types.sqlite;
 
-import ru.spliterash.utils.database.jdbc.AbstractJDBCDatabase;
+import ru.spliterash.utils.database.base.definition.Database;
 
-public abstract class SQLiteDatabase<T extends SQLiteConnectionProvider> extends AbstractJDBCDatabase<T> {
-    public static final String TYPE = "SQLite";
-
-    public SQLiteDatabase(T jdbcConnectionProvider) {
-        super(jdbcConnectionProvider);
-    }
-
-    @Override
-    public String getType() {
-        return TYPE;
-    }
+/**
+ * Интерфейс, говорящий, что дбшка SQLite'тная
+ */
+public interface SQLiteDatabase extends Database {
 }
