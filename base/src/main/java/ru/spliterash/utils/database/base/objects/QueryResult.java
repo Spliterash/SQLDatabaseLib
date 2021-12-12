@@ -6,6 +6,7 @@ import org.jetbrains.annotations.NotNull;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 @RequiredArgsConstructor
@@ -38,5 +39,9 @@ public class QueryResult implements Iterable<ResultSetRow> {
 
     public Stream<ResultSetRow> stream() {
         return rows.stream();
+    }
+
+    public List<ResultSetRow> asList() {
+        return stream().collect(Collectors.toList());
     }
 }
