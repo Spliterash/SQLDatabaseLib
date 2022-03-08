@@ -19,16 +19,16 @@ public class ResultSetRow {
         return (Integer) result.get(key);
     }
 
+    public Integer getInt(int i) {
+        return (Integer) getObject(i);
+    }
+
     public String getString(String key) {
         return result.get(key).toString();
     }
 
     public String getString(int i) {
         return getObject(i).toString();
-    }
-
-    public Integer getInt(int i) {
-        return (Integer) getObject(i);
     }
 
     public Object getObject(String key) {
@@ -78,6 +78,10 @@ public class ResultSetRow {
 
     public long getLong(int i) {
         return (long) getObject(i);
+    }
+
+    public long getLong(String str) {
+        return (long) getObject(str);
     }
 
     @Override

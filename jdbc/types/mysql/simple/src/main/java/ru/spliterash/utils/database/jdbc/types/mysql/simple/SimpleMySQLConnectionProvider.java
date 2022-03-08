@@ -8,7 +8,6 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 
 public class SimpleMySQLConnectionProvider extends AbstractMySQLConnectionProvider {
-
     static {
         try {
             Class.forName("com.mysql.jdbc.Driver");

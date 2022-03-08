@@ -1,4 +1,4 @@
-package ru.spliterash.utils.database.jdbc.types.sqlite.simple;
+package ru.spliterash.utils.database.jdbc.types.sqlite;
 
 import ru.spliterash.utils.database.base.exception.DatabaseException;
 import ru.spliterash.utils.database.jdbc.JDBCSession;

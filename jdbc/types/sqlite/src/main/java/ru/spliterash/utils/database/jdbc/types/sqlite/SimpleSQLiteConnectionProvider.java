@@ -2,8 +2,6 @@ package ru.spliterash.utils.database.jdbc.types.sqlite;
 
 import lombok.RequiredArgsConstructor;
 import ru.spliterash.utils.database.base.exception.DatabaseException;
-import ru.spliterash.utils.database.jdbc.JDBCConnectionProvider;
-import ru.spliterash.utils.database.jdbc.types.sqlite.SQLiteConnectionProvider;
 
 import java.io.File;
 import java.sql.Connection;

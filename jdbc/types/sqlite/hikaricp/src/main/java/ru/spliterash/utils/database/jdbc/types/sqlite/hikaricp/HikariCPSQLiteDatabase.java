@@ -2,6 +2,7 @@ package ru.spliterash.utils.database.jdbc.types.sqlite.hikaricp;
 
 import ru.spliterash.utils.database.base.definition.DatabaseSession;
 import ru.spliterash.utils.database.jdbc.types.sqlite.AbstractSQLiteDatabase;
+import ru.spliterash.utils.database.jdbc.types.sqlite.SimpleSQLiteConnectionSession;
 
 import java.io.File;
 
@@ -16,6 +17,6 @@ public class HikariCPSQLiteDatabase extends AbstractSQLiteDatabase<HikariCPSQLit
 
     @Override
     public DatabaseSession createSession() {
-        return new HikariCPSQLiteSession(connectionProvider.getConnection());
+        return new SimpleSQLiteConnectionSession(connectionProvider.getConnection());
     }
 }

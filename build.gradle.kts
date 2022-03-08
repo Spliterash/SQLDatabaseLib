@@ -32,7 +32,7 @@ allprojects {
     }
 
     dependencies {
-        compileOnly("org.jetbrains", "annotations", "20.1.0")
+        implementation("org.jetbrains", "annotations", "20.1.0")
 
         testImplementation(platform("org.junit:junit-bom:5.8.1"))
         testImplementation("org.junit.jupiter:junit-jupiter")
