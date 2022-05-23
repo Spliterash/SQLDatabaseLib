@@ -75,11 +75,6 @@ val base: Project = project(":base")
 
 val projectRepoFolder: String = rootProject.projectDir.absolutePath + "\\repo"
 
-//for (def repo in project.repositories) {
-//    repo.
-//}
-
-
 subprojects {
     apply(plugin = "maven-publish")
     apply(uri("https://gradle.spliterash.ru/group-id-fix.gradle"))
@@ -89,10 +84,7 @@ subprojects {
         withSourcesJar()
     }
 
-    val mavenGroupId = rootProject.group.toString() + "." + rootProject.name;
-    ext["mavenGroupId"] = mavenGroupId
-
-
+    ext["mavenGroupId"] = "ru.spliterash"
 
     afterEvaluate {
         if (tasks.jar.get().enabled) {
@@ -111,7 +103,7 @@ subprojects {
                 repositories {
                     maven {
                         name = "nexus"
-                        url = uri("https://nexus.spliterash.ru/repository/libs")
+                        url = uri("https://nexus.spliterash.ru/repository/sql-database")
                         credentials {
                             username = project.property("splitNexusUser") as String
                             password = project.property("splitNexusPassword") as String

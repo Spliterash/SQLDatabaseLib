@@ -22,5 +22,5 @@ subprojects {
 
         lastProject = lastProject.parent!!
     }
-    ext["mavenArtifactId"] = artifactName
+    ext["mavenArtifactId"] = rootProject.name + "-" + artifactName
 }

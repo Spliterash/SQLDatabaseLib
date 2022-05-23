@@ -92,8 +92,8 @@
    * SQLite стандартный
     ```xml
     <dependency>
-      <groupId>ru.spliterash.utils.sql-database</groupId>
-      <artifactId>sqlite-simple</artifactId>
+      <groupId>ru.spliterash</groupId>
+      <artifactId>sql-database-sqlite-simple</artifactId>
       <version>1.0.0-SNAPSHOT</version>
     </dependency>
     ```
@@ -103,8 +103,8 @@
     * SQLite через HikariCP
     ```xml
     <dependency>
-      <groupId>ru.spliterash.utils.sql-database</groupId>
-      <artifactId>sqlite-hikaricp</artifactId>
+      <groupId>ru.spliterash</groupId>
+      <artifactId>sql-database-sqlite-hikaricp</artifactId>
       <version>1.0.0-SNAPSHOT</version>
     </dependency>
     ```
@@ -117,8 +117,8 @@
    * MySQL стандартный
     ```xml
     <dependency>
-      <groupId>ru.spliterash.utils.sql-database</groupId>
-      <artifactId>mysql-simple</artifactId>
+      <groupId>ru.spliterash</groupId>
+      <artifactId>sql-database-mysql-simple</artifactId>
       <version>1.0.0-SNAPSHOT</version>
     </dependency>
     ```
@@ -128,8 +128,8 @@
     * MySQL через HikariCP
     ```xml
     <dependency>
-      <groupId>ru.spliterash.utils.sql-database</groupId>
-      <artifactId>mysql-hikaricp</artifactId>
+      <groupId>ru.spliterash</groupId>
+      <artifactId>sql-database-mysql-hikaricp</artifactId>
       <version>1.0.0-SNAPSHOT</version>
     </dependency>
     ```
