@@ -1,19 +1,13 @@
 plugins {
-    id("java")
+    id("java-library")
     id("maven-publish")
-    id("io.freefair.lombok") version "6.2.0"
+    id("io.freefair.lombok") version "6.5.1"
 }
 
 allprojects {
-    apply(plugin = "java")
+    apply(plugin = "java-library")
     apply(plugin = "io.freefair.lombok")
 
-/*    tasks.generateLombokConfig {
-        enabled = false
-    }*/
-
-
-    group = "ru.spliterash.utils"
     version = "1.0.0-SNAPSHOT"
 
     java {
@@ -32,7 +26,7 @@ allprojects {
     }
 
     dependencies {
-        implementation("org.jetbrains", "annotations", "20.1.0")
+        compileOnly("org.jetbrains", "annotations", "20.1.0")
 
         testImplementation(platform("org.junit:junit-bom:5.8.1"))
         testImplementation("org.junit.jupiter:junit-jupiter")
@@ -43,6 +37,7 @@ allprojects {
 
     tasks.test {
         useJUnitPlatform()
+        enabled = false
     }
 
     ext {
@@ -61,12 +56,12 @@ tasks.jar {
 }
 
 
-val base: Project = project(":base")
+val baseProject = project(":base")
 
 // Все проекты имеют доступ к base
-(subprojects.toMutableList() - base).forEach {
-    it.dependencies {
-        implementation(base)
+configure(subprojects - baseProject) {
+    dependencies {
+        api(baseProject)
     }
 }
 
@@ -77,45 +72,46 @@ val projectRepoFolder: String = rootProject.projectDir.absolutePath + "\\repo"
 
 subprojects {
     apply(plugin = "maven-publish")
-    apply(uri("https://gradle.spliterash.ru/group-id-fix.gradle"))
-    apply(uri("https://gradle.spliterash.ru/maven-publish.gradle"))
+
+
+    if (!project.file("src").isDirectory) {
+        tasks.jar {
+            enabled = false
+        }
+        return@subprojects
+    }
 
     java {
         withSourcesJar()
     }
+    publishing {
+        publications {
+            create<MavenPublication>("maven") {
+                groupId = "ru.spliterash"
+                artifactId = rootProject.name + "-" + project.name
 
-    ext["mavenGroupId"] = "ru.spliterash"
-
-    afterEvaluate {
-        if (tasks.jar.get().enabled) {
-            publishing {
-                publications {
-                    create<MavenPublication>("maven") {
-                        pom {
-                            description.set("Simple library to work better with java JDBC database")
-                            url.set("https://github.com/Spliterash/SQLDatabaseLib.git")
-                        }
-
-                        from(components["java"])
-                    }
+                pom {
+                    description.set("Simple library to work better with java JDBC database")
+                    url.set("https://github.com/Spliterash/SQLDatabaseLib.git")
                 }
 
-                repositories {
-                    maven {
-                        name = "nexus"
-                        url = uri("https://nexus.spliterash.ru/repository/sql-database")
-                        credentials {
-                            username = project.property("splitNexusUser") as String
-                            password = project.property("splitNexusPassword") as String
-                        }
-                    }
+                from(components["java"])
+            }
+        }
 
-                    /*    maven {
-                            name = "local"
-                            url = uri("file://$projectRepoFolder")
-                        }*/
-
+        repositories {
+            maven {
+                name = "nexus"
+                url = uri("https://nexus.spliterash.ru/repository/sql-database")
+                credentials {
+                    username = project.property("SPLITERASH_NEXUS_USR") as String
+                    password = project.property("SPLITERASH_NEXUS_PSW") as String
                 }
+            }
+
+            maven {
+                name = "local"
+                url = uri("file://$projectRepoFolder")
             }
         }
     }

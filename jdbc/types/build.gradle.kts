@@ -1,12 +1,8 @@
 val jdbc = project
 
-tasks.jar {
-    enabled = false
-}
-
 subprojects {
     dependencies {
-        implementation(project(":jdbc"))
+        api(project(":jdbc"))
     }
 
     var artifactName: String? = null;
@@ -22,5 +18,8 @@ subprojects {
 
         lastProject = lastProject.parent!!
     }
-    ext["mavenArtifactId"] = rootProject.name + "-" + artifactName
+
+    publishing.publications.withType(MavenPublication::class) {
+        artifactId = rootProject.name + "-" + artifactName
+    }
 }

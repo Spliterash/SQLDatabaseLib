@@ -1,1 +1,0 @@
-ext["mavenArtifactId"] = rootProject.name + "-" + project.name
