@@ -18,11 +18,6 @@ allprojects {
     repositories {
         mavenCentral()
         mavenLocal()
-
-        maven {
-            name = "spliterash-group"
-            url = uri("https://nexus.spliterash.ru/repository/group/")
-        }
     }
 
     dependencies {
@@ -102,7 +97,7 @@ subprojects {
         repositories {
             maven {
                 name = "nexus"
-                url = uri("https://nexus.spliterash.ru/repository/sql-database")
+                url = uri("https://repo.spliterash.ru/sql-database")
                 credentials {
                     username = project.property("SPLITERASH_NEXUS_USR") as String
                     password = project.property("SPLITERASH_NEXUS_PSW") as String
