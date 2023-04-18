@@ -16,11 +16,11 @@ public class ResultSetRow {
     private final Map<String, Object> result;
 
     public Integer getInt(String key) {
-        return (Integer) result.get(key);
+        return ((Number) result.get(key)).intValue();
     }
 
     public Integer getInt(int i) {
-        return (Integer) getObject(i);
+        return ((Number) getObject(i)).intValue();
     }
 
     public String getString(String key) {
@@ -77,11 +77,11 @@ public class ResultSetRow {
     }
 
     public long getLong(int i) {
-        return (long) getObject(i);
+        return ((Number) getObject(i)).longValue();
     }
 
     public long getLong(String str) {
-        return (long) getObject(str);
+        return ((Number) getObject(str)).longValue();
     }
 
     @Override

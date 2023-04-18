@@ -8,7 +8,7 @@ allprojects {
     apply(plugin = "java-library")
     apply(plugin = "io.freefair.lombok")
 
-    version = "1.0.0-SNAPSHOT"
+    version = "1.0.1"
 
     java {
         sourceCompatibility = JavaVersion.VERSION_1_8
