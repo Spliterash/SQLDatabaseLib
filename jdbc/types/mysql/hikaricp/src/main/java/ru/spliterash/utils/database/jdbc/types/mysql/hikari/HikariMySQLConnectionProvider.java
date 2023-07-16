@@ -14,20 +14,16 @@ public class HikariMySQLConnectionProvider implements JDBCCloseableConnectionPro
     private final HikariDataSource hikariDataSource;
 
     public HikariMySQLConnectionProvider(
-            String host,
-            int port,
+            String url,
             String user,
             String password,
-            String database,
-            String driverName
+            String driverClass
     ) {
         HikariConfig config = new HikariConfig();
-        String url = "jdbc:mysql://" + host + ":" + port + "/" + database;
-
         config.setJdbcUrl(url);
         config.setUsername(user);
         config.setPassword(password);
-        config.setDriverClassName(driverName);
+        config.setDriverClassName(driverClass);
 
         config.addDataSourceProperty("cachePrepStmts", true);
         config.addDataSourceProperty("prepStmtCacheSize", 250);
@@ -42,17 +38,6 @@ public class HikariMySQLConnectionProvider implements JDBCCloseableConnectionPro
 
         hikariDataSource = new HikariDataSource(config);
     }
-
-    public HikariMySQLConnectionProvider(
-            String host,
-            int port,
-            String user,
-            String password,
-            String database
-    ) {
-        this(host, port, user, password, database, "com.mysql.jdbc.Driver");
-    }
-
     public HikariMySQLConnectionProvider(HikariConfig config) {
         hikariDataSource = new HikariDataSource(config);
     }
