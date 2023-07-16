@@ -126,7 +126,7 @@ public class JDBCUtils {
         builder.append(query, oldEnd, matcher.start());
         oldEnd = matcher.end();
         Collection<?> argCollection;
-        if (arg.getClass().isArray())
+        if (arg != null && arg.getClass().isArray())
             argCollection = Arrays.asList((Object[]) arg);
         else if (arg instanceof Collection)
             argCollection = (Collection<?>) arg;
